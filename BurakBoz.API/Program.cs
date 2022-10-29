@@ -4,6 +4,7 @@ using BurakBoz.Core.UnitOfWork;
 using BurakBoz.Repository;
 using BurakBoz.Repository.Repositories;
 using BurakBoz.Repository.UnitOfWork;
+using BurakBoz.Service.Mapping;
 using BurakBoz.Service.Services;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -20,6 +21,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(typeof(IGenericRepository<>),typeof(GenericRepository<>));
 builder.Services.AddScoped(typeof(IService<>), typeof(Service<>));
+builder.Services.AddAutoMapper(typeof(MapProfile));
+
+
 builder.Services.AddDbContext<AppDbContext>(x=> {
     x.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"), option =>
     {
