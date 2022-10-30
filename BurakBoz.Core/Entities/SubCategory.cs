@@ -9,7 +9,7 @@ namespace BurakBoz.Core.Entities
     public class SubCategory:Category
     {
         public int MainCategoryId { get; set; }
-        public MainCategory MainCategory { get; set; }
-        public ICollection<Blog> Blogs { get; set; }
+        public MainCategory? MainCategory { get; set; }
+        public ICollection<Blog>? Blogs { get; set; }
     }
 }

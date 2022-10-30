@@ -18,6 +18,7 @@ namespace BurakBoz.Service.Mapping
             CreateMap<SubCategory, SubCategoryDto>().ReverseMap();
             CreateMap<SocialMedia, SocialMediaDto>().ReverseMap();
             CreateMap<Static, StaticDto>().ReverseMap();
+            CreateMap<MainCategoryWithFileDto, MainCategory>().ReverseMap();
         }
     }
 }

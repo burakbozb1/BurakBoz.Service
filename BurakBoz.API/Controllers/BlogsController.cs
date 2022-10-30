@@ -14,9 +14,9 @@ namespace BurakBoz.API.Controllers
         private readonly IMapper mapper;
         private readonly IService<MainCategory> mainCategoryService;
         private readonly IService<SubCategory> subCategoryService;
-        private readonly IService<Blog> blogService;
+        private readonly IBlogService blogService;
 
-        public BlogsController(IMapper mapper, IService<MainCategory> mainCategoryService, IService<SubCategory> subCategoryService, IService<Blog> blogService)
+        public BlogsController(IMapper mapper, IService<MainCategory> mainCategoryService, IService<SubCategory> subCategoryService, IBlogService blogService)
         {
             this.mapper = mapper;
             this.mainCategoryService = mainCategoryService;
@@ -24,19 +24,13 @@ namespace BurakBoz.API.Controllers
             this.blogService = blogService;
         }
 
-        [HttpGet("all/{categoryId}")]
-        public async Task<IActionResult> GetAllBlogs(int categoryId)
+        [HttpGet("all/{maincategoryId}")]
+        public async Task<IActionResult> GetAllBlogs(int maincategoryId)
         {
-            var subCategories = await subCategoryService.Where(x => x.MainCategoryId == categoryId && x.IsShow == true).ToListAsync();
-            List<Blog> blogs = new List<Blog>();
-            foreach (var subCategory in subCategories)
-            {
-                var foundedBlogs = await blogService.Where(x => x.SubCategoryId == subCategory.Id).ToListAsync();
-                blogs.AddRange(foundedBlogs);
-            }
-            var blogsDto = mapper.Map<List<BlogDto>>(blogs);
-            return CreateActionResult(CustomResponseDto<List<BlogDto>>.Success(200, blogsDto));
+            return CreateActionResult(await blogService.GetBlogsByMainCategoryIdActives(maincategoryId));
         }
+
+
 
         [HttpGet("{categoryId}")]
         public async Task<IActionResult> GetBlogs(int categoryId)

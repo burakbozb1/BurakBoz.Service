@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BurakBoz.Core.DTOs
 {
-    public class SubCategoryDto
+    public class SubCategoryDto:CategoryDto
     {
         public int MainCategoryId { get; set; }
     }

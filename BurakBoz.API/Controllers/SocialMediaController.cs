@@ -8,17 +8,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BurakBoz.API.Controllers
 {
-    public class ValuesController : CustomBaseController
+    public class SocialMediaController : CustomBaseController
     {
         private readonly IMapper mapper;
         private readonly IService<SocialMedia> socialMediaService;
 
-        public ValuesController(IMapper mapper, IService<SocialMedia> socialMediaService)
+        public SocialMediaController(IMapper mapper, IService<SocialMedia> socialMediaService)
         {
             this.mapper = mapper;
             this.socialMediaService = socialMediaService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetSocialMedias()
         {
             var socialMedias = await socialMediaService.Where(x => x.IsShow == true).ToListAsync();

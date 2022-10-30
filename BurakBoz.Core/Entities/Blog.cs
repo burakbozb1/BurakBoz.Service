@@ -14,6 +14,6 @@ namespace BurakBoz.Core.Entities
         public string Text { get; set; }
         public int Status { get; set; }
         public DateTime UpdatedDate { get; set; }
-        public SubCategory SubCategory { get; set; }
+        public SubCategory? SubCategory { get; set; }
     }
 }
