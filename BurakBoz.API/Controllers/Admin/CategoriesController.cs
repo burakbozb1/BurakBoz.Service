@@ -85,18 +85,25 @@ namespace BurakBoz.API.Controllers.Admin
                     System.IO.File.Delete(selectedCategory.Image);
                 }
 
-
-                string pathC = Path.GetPathRoot(Environment.SystemDirectory);
-                pathC += @"BurakBozWeb\CategoryImages";
-                string path = "";
-                Guid imageName = Guid.NewGuid();
-                path = Path.Combine(pathC, imageName.ToString());
-                path += Path.GetExtension(category.File.FileName);
-                using (Stream stream = new FileStream(path, FileMode.Create))
+                if (category.File!=null)
                 {
-                    category.File.CopyTo(stream);
+                    string pathC = Path.GetPathRoot(Environment.SystemDirectory);
+                    pathC += @"BurakBozWeb\CategoryImages";
+                    string path = "";
+                    Guid imageName = Guid.NewGuid();
+                    path = Path.Combine(pathC, imageName.ToString());
+                    path += Path.GetExtension(category.File.FileName);
+                    using (Stream stream = new FileStream(path, FileMode.Create))
+                    {
+                        category.File.CopyTo(stream);
+                    }
+                    selectedCategory.Image = path;
                 }
-                selectedCategory.Image = path;
+                else
+                {
+                    selectedCategory.Image = category.Image;
+                }
+                
                 await mainCategoryService.UpdateAsync(selectedCategory);
                 return CreateActionResult(CustomResponseDto<NoContentDto>.Success(204));
 
